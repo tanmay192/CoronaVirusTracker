@@ -7,6 +7,8 @@ import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
@@ -24,6 +26,7 @@ public class CoronaVirusDataFetchService {
     private CoronaVirusDataRepository coronaVirusDataRepository;
 
     @PostConstruct
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     @Scheduled(cron = "0 30 10 * * ?", zone = "GMT+5.30")
     public void fetchCoronaVirusData() throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
@@ -42,8 +45,8 @@ public class CoronaVirusDataFetchService {
             int n = record.size();
             locationStats.setState(record.get("Province/State"));
             locationStats.setCountry(record.get("Country/Region"));
-            locationStats.setNewNumberOfCases(Integer.parseInt(record.get(n - 1)));
-            locationStats.setChangeInNumberOfCases(Integer.parseInt(record.get(n - 1))
+            locationStats.setNewNumberOfCases(Long.parseLong(record.get(n - 1)));
+            locationStats.setChangeInNumberOfCases(Long.parseLong(record.get(n - 1))
                     - Integer.parseInt(record.get(n - 2)));
 
             coronaVirusDataRepository.save(locationStats);

@@ -1,14 +1,12 @@
 package com.tanmay192.CoronaVirusTracker.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
 import javax.persistence.*;
 
 
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -21,6 +19,6 @@ public class LocationStats {
 
     private String state;
     private String country;
-    private Integer newNumberOfCases;
-    private Integer changeInNumberOfCases;
+    private Long newNumberOfCases;
+    private Long changeInNumberOfCases;
 }
