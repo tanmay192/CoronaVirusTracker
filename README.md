@@ -1,4 +1,4 @@
-# Corona Virus Tracker
+# Corona Virus Tracker | [Link](https://corona-virus-tracker-tanmay192.herokuapp.com/)
 An application to track the latest coronavirus numbers and daily changes across different countries of the world.
 
 ## Technologies Used
